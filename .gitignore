@@ -1,4 +1,8 @@
-node_modules
-.cache
-dist
-.parcel-cache
+my-amazon-app/node_modules
+my-amazon-app/.cache
+my-amazon-app/dist
+my-amazon-app/.parcel-cache
+my-amazon-app/.env
+
+back/node_modules
+back/.env
