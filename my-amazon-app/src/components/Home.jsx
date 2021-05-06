@@ -14,12 +14,16 @@ function Home() {
         />
         <div className="home__row">
           <Product
+            key={`product_345`}
+            id={345}
             title="The Lean Startup: How Constant Innovation Creates Radically Successfull Buisinesses Paperback"
             image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL.__AC_SY400__.jpg"
             price={19.99}
             rating={3}
           />
           <Product
+            key={`product_3467`}
+            id={3467}
             title="Kenwood kMix Stand Mixer for Baking, Stylish Kitchen Mixer with K-beater, Dough Hook and Whisk, 5 Litre Glass Bowl"
             image="https://images-na.ssl-images-amazon.com/images/I/514RLGf4c%2BL._AC_SX679_.jpg"
             price={239.0}
@@ -28,18 +32,24 @@ function Home() {
         </div>
         <div className="home__row">
           <Product
+            key={`product_3475`}
+            id={3475}
             title="Nintendo Switch avec paire de Joy-Con Rouge N&eacute;on et Bleu N&eacute;on"
             image="https://images-na.ssl-images-amazon.com/images/I/71r5EDssKdL._AC_SX679_.jpg"
             price={329.99}
             rating={5}
           />
           <Product
+            key={`product_45`}
+            id={45}
             title="6 Pin PCI-e 1X to 16X Carte d'adaptateur de Riser Amplifi&eacute;e &amp"
             image="https://images-na.ssl-images-amazon.com/images/I/81A0nbQZyuL._AC_SX679_.jpg"
             price={29.99}
             rating={4}
           />
           <Product
+            key={`product_2345`}
+            id={2345}
             title="Regarder Pour des hommes - Skagen SKT5200"
             image="https://images-na.ssl-images-amazon.com/images/I/61hyvKdIClL._AC_UX522_.jpg"
             price={254.64}
@@ -48,6 +58,8 @@ function Home() {
         </div>
         <div className="home__row">
           <Product
+            key={`product_5678`}
+            id={5678}
             title='Dell S2721D &Eacute;cran de PC 27" Quad HD IPS 75 Hz AMD FreeSync, Argent'
             image="https://images-na.ssl-images-amazon.com/images/I/819hVHPVu-L._AC_SX679_.jpg"
             price={249.99}
