@@ -2,17 +2,20 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './components/Home';
+import Checkout from './components/Checkout';
 
 import './App.css';
 
 function App() {
   return (
     <main className="app">
-      {/* <h1>Hello Amazon Clone App 🚀</h1> */}
+      <Header />
       <Switch>
         <Route exact path="/">
-          <Header />
           <Home />
+        </Route>
+        <Route path="/checkout">
+          <Checkout />
         </Route>
       </Switch>
     </main>

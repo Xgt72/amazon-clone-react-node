@@ -26,3 +26,9 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.flex_col_justify_between {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
