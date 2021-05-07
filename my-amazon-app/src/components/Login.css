@@ -1,0 +1,10 @@
+
+.login {
+    background-color: white;
+    height: 100vh;
+}
+.login__logo {
+    margin: 20px auto;
+    object-fit: contain;
+    width: 100%;
+}

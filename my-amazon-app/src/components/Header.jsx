@@ -18,10 +18,13 @@ function Header() {
         <SearchIcon className="header__searchIcon" />
       </div>
       <div className="header__nav flex_row_justify_evenly">
-        <div className="header__option flex_col">
-          <span className="header__optionLineOne">Hello Guest</span>
-          <span className="header__optionLineTwo">Sign In</span>
-        </div>
+        <Link to="/login">
+          <div className="header__option flex_col">
+            <span className="header__optionLineOne">Hello Guest</span>
+
+            <span className="header__optionLineTwo">Sign In</span>
+          </div>
+        </Link>
         <div className="header__option flex_col">
           <span className="header__optionLineOne">Returns</span>
           <span className="header__optionLineTwo">& Orders</span>
