@@ -12,6 +12,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.flex_row {
+  display: flex;
+}
+
 .flex_row_align_center {
   display: flex;
   align-items: center;
@@ -25,4 +29,10 @@ body {
 .flex_col {
   display: flex;
   flex-direction: column;
+}
+
+.flex_col_justify_between {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
