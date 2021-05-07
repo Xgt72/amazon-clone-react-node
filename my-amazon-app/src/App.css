@@ -12,6 +12,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.flex_row {
+  display: flex;
+}
+
 .flex_row_align_center {
   display: flex;
   align-items: center;

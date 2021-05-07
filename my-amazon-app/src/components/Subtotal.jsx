@@ -1,17 +1,18 @@
 import React from 'react';
 import { useStateValue } from '../StateProvider';
 import CurrencyFormat from 'react-currency-format';
+import { getBasketTotal } from '../reducer';
 import './Subtotal.css';
 
 function Subtotal() {
   const [{ basket }] = useStateValue();
-  const calculSubtotal = () => {
-      let subtotal = 0;
-      basket.forEach(item => {
-          subtotal += item.price;
-      });
-      return subtotal;
-  };
+  // const calculSubtotal = () => {
+  //     let subtotal = 0;
+  //     basket.forEach(item => {
+  //         subtotal += item.price;
+  //     });
+  //     return subtotal;
+  // };
 
   return (
     <div className="flex_col_justify_between subtotal">
@@ -27,7 +28,7 @@ function Subtotal() {
           </>
         )}
         decimalScale={2}
-        value={calculSubtotal()}
+        value={getBasketTotal(basket)}
         displayType={'text'}
         thousandSeparator={true}
         prefix={'€'}
