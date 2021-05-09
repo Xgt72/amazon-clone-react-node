@@ -2,15 +2,17 @@ const usersRouter = require("express").Router();
 const {
     getAllUsers,
     getOneUserById,
-    getOneUserByEmailAndPassword,
+    getOneUserByEmail,
     createOneUser,
     updateOneUser,
     deleteOneUser,
+    passwordIsValid,
 } = require("../controllers/users");
+const { createToken } = require("../controllers/authentication");
 
 usersRouter.get("/", getAllUsers);
 usersRouter.post("/register", createOneUser, getOneUserById);
-usersRouter.post("/login", getOneUserByEmailAndPassword);
+usersRouter.post("/login", getOneUserByEmail, passwordIsValid, createToken);
 usersRouter.put("/:id", updateOneUser, getOneUserById);
 usersRouter.delete("/:id", deleteOneUser);
 

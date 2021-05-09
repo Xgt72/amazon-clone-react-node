@@ -31,6 +31,7 @@ const getOneUserById = async (req, res, next) => {
                 } else if (req.params.id) {
                     res.status(200);
                 }
+                user[0].password = "hidden";
                 res.json(user[0]);
             }
         })
@@ -42,15 +43,16 @@ const getOneUserById = async (req, res, next) => {
         });
 };
 
-const getOneUserByEmailAndPassword = async (req, res, next) => {
+const getOneUserByEmail = async (req, res, next) => {
     const { email, password } = req.body;
 
-    User.fetchOneByEmailAndPassword(email, password)
+    User.fetchOneByEmail(email)
         .then(([user]) => {
             if (user.length === 0) {
                 res.status(404).json({ errorMessage: "User not found" });
             } else {
-                res.json(user[0]);
+                req.body.user = user[0];
+                next();
             }
         })
         .catch((err) => {
@@ -114,11 +116,24 @@ const deleteOneUser = async (req, res, next) => {
         });
 };
 
+const passwordIsValid = async (req, res, next) => {
+    const validPassword = User.passwordIsValid(
+        req.body.password,
+        req.body.user.password
+    );
+    if (validPassword) {
+        next();
+    } else {
+        res.status(401).json({ errorMessage: "Email or Password is wrong" });
+    }
+};
+
 module.exports = {
     getAllUsers,
     getOneUserById,
-    getOneUserByEmailAndPassword,
+    getOneUserByEmail,
     createOneUser,
     updateOneUser,
     deleteOneUser,
+    passwordIsValid,
 };

@@ -1,4 +1,6 @@
 const connection = require("../db-connection");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 class User {
     constructor(firstname, lastname, email, password) {
@@ -18,12 +20,13 @@ class User {
         return connection.promise().query(sql, [id]);
     }
 
-    static fetchOneByEmailAndPassword(email, password) {
-        const sql = "SELECT * FROM user WHERE email=? AND password=?";
-        return connection.promise().query(sql, [email, password]);
+    static fetchOneByEmail(email) {
+        const sql = "SELECT * FROM user WHERE email=?";
+        return connection.promise().query(sql, [email]);
     }
 
     static createOne(user) {
+        user.password = bcrypt.hashSync(user.password, saltRounds);
         const sql = "INSERT INTO user SET ?";
         return connection.promise().query(sql, [user]);
     }
@@ -33,8 +36,12 @@ class User {
         const values = Object.values(userData);
         const properties = Object.keys(userData);
         sql += properties.join("=?, ");
-        
+
         sql += "=? WHERE id=?";
+
+        if (properties.includes("password")) {
+            userData.password = bcrypt.hashSync(userData.password, saltRounds);
+        }
         // console.log(sql, [...values, id]);
         return connection.promise().query(sql, [...values, id]);
     }
@@ -42,6 +49,14 @@ class User {
     static deleteOne(id) {
         const sql = "DELETE FROM user WHERE id=?";
         return connection.promise().query(sql, [id]);
+    }
+
+    // static hashPassword(password) {
+    //     return bcrypt.hashSync(password, saltRounds);
+    // }
+
+    static passwordIsValid(password, hashPassword) {
+        return bcrypt.compareSync(password, hashPassword);
     }
 }
 
