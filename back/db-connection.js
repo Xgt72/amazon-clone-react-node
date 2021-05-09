@@ -12,6 +12,6 @@ const config = {
     multipleStatements: true,
 };
 
-const connection = mysql.createConnection(config);
+const connection = mysql.createPool(config);
 
 module.exports = connection;
