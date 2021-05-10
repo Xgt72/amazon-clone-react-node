@@ -1,24 +1,75 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+const API_URL = process.env.REACT_APP_API_URL;
 
 import './Login.css';
 
 function Login() {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const signIn = (e) => {
     e.preventDefault();
-    console.log(email, password);
 
     // login with backend.
-  }
+    if (email && password) {
+      fetch(`${API_URL}/users/login`, {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+        body: JSON.stringify({ email, password }),
+      })
+        .then((res) => {
+          if (res.status !== 200) {
+            throw new Error("Email or Password wrong");
+          } else {
+            return res.json();
+          }
+        })
+        .then((user) => {
+          if (user) {
+            localStorage.setItem('AMAZON_TOKEN', user.token);
+            history.push('/');
+          }
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+  };
 
   const register = (e) => {
     e.preventDefault();
 
     // register with backend.
-  }
+    if (email && password) {
+      fetch(`${API_URL}/users/register`, {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+        body: JSON.stringify({ email, password }),
+      })
+      .then((res) => {
+        if (res.status !== 201) {
+          throw new Error("Email already used in other account");
+        } else {
+          return res.json();
+        }
+      })
+        .then((user) => {
+          // console.log(user);
+          if (user) {
+            history.push('/');
+          }
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+  };
 
   return (
     <div className="login flex_col_align_center">

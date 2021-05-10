@@ -8,12 +8,12 @@ const {
     deleteOneUser,
     passwordIsValid,
 } = require("../controllers/users");
-const { createToken } = require("../controllers/authentication");
+const { createToken, authenticateWithJsonWebToken } = require("../controllers/jwt");
 
 usersRouter.get("/", getAllUsers);
 usersRouter.post("/register", createOneUser, getOneUserById);
 usersRouter.post("/login", getOneUserByEmail, passwordIsValid, createToken);
-usersRouter.put("/:id", updateOneUser, getOneUserById);
-usersRouter.delete("/:id", deleteOneUser);
+usersRouter.put("/:id", authenticateWithJsonWebToken, updateOneUser, getOneUserById);
+usersRouter.delete("/:id", authenticateWithJsonWebToken, deleteOneUser);
 
 module.exports = usersRouter;

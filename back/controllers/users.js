@@ -44,7 +44,7 @@ const getOneUserById = async (req, res, next) => {
 };
 
 const getOneUserByEmail = async (req, res, next) => {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
     User.fetchOneByEmail(email)
         .then(([user]) => {
@@ -124,7 +124,7 @@ const passwordIsValid = async (req, res, next) => {
     if (validPassword) {
         next();
     } else {
-        res.status(401).json({ errorMessage: "Email or Password is wrong" });
+        res.status(400).json({ errorMessage: "Email or Password is wrong" });
     }
 };
 
