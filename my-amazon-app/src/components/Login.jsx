@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useStateValue } from '../StateProvider';
 const API_URL = process.env.REACT_APP_API_URL;
 
 import './Login.css';
 
 function Login() {
+  const dispatch = useStateValue()[1];
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +25,7 @@ function Login() {
       })
         .then((res) => {
           if (res.status !== 200) {
-            throw new Error("Email or Password wrong");
+            throw new Error('Email or Password wrong');
           } else {
             return res.json();
           }
@@ -31,6 +33,7 @@ function Login() {
         .then((user) => {
           if (user) {
             localStorage.setItem('AMAZON_TOKEN', user.token);
+            dispatch({ type: 'SET_USER', user });
             history.push('/');
           }
         })
@@ -52,13 +55,13 @@ function Login() {
         }),
         body: JSON.stringify({ email, password }),
       })
-      .then((res) => {
-        if (res.status !== 201) {
-          throw new Error("Email already used in other account");
-        } else {
-          return res.json();
-        }
-      })
+        .then((res) => {
+          if (res.status !== 201) {
+            throw new Error('Email already used in other account');
+          } else {
+            return res.json();
+          }
+        })
         .then((user) => {
           // console.log(user);
           if (user) {

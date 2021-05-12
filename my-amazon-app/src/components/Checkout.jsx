@@ -6,7 +6,7 @@ import CheckoutProduct from './CheckoutProduct';
 import './Checkout.css';
 
 function Checkout() {
-  const [{ basket }] = useStateValue();
+  const [{ basket, user }] = useStateValue();
   return (
     <div className="checkout flex_row">
       <div className="checkout__left">
@@ -16,10 +16,18 @@ function Checkout() {
           alt="advertising"
         />
         <div>
+          <h3>Hello, {user?.email}</h3>
           <h2 className="checkout__title">Your Shopping Basket</h2>
         </div>
         {basket.map((item, index) => (
-          <CheckoutProduct key={`product_${item.id}-${index}`} id={item.id} title={item.title} image={item.image} price={item.price} rating={item.rating} />
+          <CheckoutProduct
+            key={`product_${item.id}-${index}`}
+            id={item.id}
+            title={item.title}
+            image={item.image}
+            price={item.price}
+            rating={item.rating}
+          />
         ))}
       </div>
       <div className="checkout__right">

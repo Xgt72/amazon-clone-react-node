@@ -7,7 +7,15 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import './Header.css';
 
 function Header() {
-  const [{ basket }] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
+
+  const handleAuthentication = (e) => {
+    if ((user && e.key === 'Enter') || user) {
+      localStorage.removeItem('AMAZON_TOKEN');
+      dispatch({ type: 'RESET_USER' });
+    }
+  };
+
   return (
     <header className="header flex_row_align_center">
       <Link to="/">
@@ -18,11 +26,15 @@ function Header() {
         <SearchIcon className="header__searchIcon" />
       </div>
       <div className="header__nav flex_row_justify_evenly">
-        <Link to="/login">
-          <div className="header__option flex_col">
-            <span className="header__optionLineOne">Hello Guest</span>
-
-            <span className="header__optionLineTwo">Sign In</span>
+        <Link to={!user ? '/login' : ''}>
+          <div
+            className="header__option flex_col"
+            onClick={handleAuthentication}
+            onKeyPress={(e) => handleAuthentication(e)}
+            role="button"
+            tabIndex="0">
+            <span className="header__optionLineOne">Hello {user ? user.firstname : 'Guest'}</span>
+            <span className="header__optionLineTwo">{user ? 'Sign Out' : 'Sign In'}</span>
           </div>
         </Link>
         <div className="header__option flex_col">
