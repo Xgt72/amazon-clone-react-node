@@ -3,6 +3,8 @@ my-amazon-app/.cache
 my-amazon-app/dist
 my-amazon-app/.parcel-cache
 my-amazon-app/.env
+my-amazon-app/yarn.lock
 
 back/node_modules
 back/.env
+back/yarn.lock

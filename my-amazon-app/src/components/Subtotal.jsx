@@ -1,18 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from '../reducer';
 import './Subtotal.css';
 
 function Subtotal() {
+  const history = useHistory();
   const [{ basket }] = useStateValue();
-  // const calculSubtotal = () => {
-  //     let subtotal = 0;
-  //     basket.forEach(item => {
-  //         subtotal += item.price;
-  //     });
-  //     return subtotal;
-  // };
 
   return (
     <div className="flex_col_justify_between subtotal">
