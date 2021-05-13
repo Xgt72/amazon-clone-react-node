@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import StarIcon from '@material-ui/icons/Star';
 import StarOutlineIcon from '@material-ui/icons/StarOutline';
 
 import './CheckoutProduct.css';
 import { useStateValue } from '../StateProvider';
 
-function CheckoutProduct({ id, title, image, price, rating }) {
+const CheckoutProduct = forwardRef(({ id, title, image, price, rating }, ref) => {
   const [_, dispatch] = useStateValue();
 
   const getRatingWithStars = () => {
@@ -27,7 +27,7 @@ function CheckoutProduct({ id, title, image, price, rating }) {
   };
 
   return (
-    <div className="checkoutProduct flex_row_align_center">
+    <div className="checkoutProduct flex_row_align_center" ref={ref}>
       <img className="checkoutProduct__image" src={image} alt={title} />
       <div className="checkoutProduct__info">
         <p className="checkoutProduct__title">{title}</p>
@@ -42,6 +42,6 @@ function CheckoutProduct({ id, title, image, price, rating }) {
       </div>
     </div>
   );
-}
+});
 
 export default CheckoutProduct;
