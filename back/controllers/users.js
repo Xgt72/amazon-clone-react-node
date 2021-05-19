@@ -64,9 +64,9 @@ const getOneUserByEmail = async (req, res, next) => {
 };
 
 const createOneUser = async (req, res, next) => {
-    const { firstname, lastname, email, password } = req.body;
+    const { firstname, lastname, email, password, street, city, zip_code } = req.body;
 
-    User.createOne({ firstname, lastname, email, password })
+    User.createOne({ firstname, lastname, email, password, street, city, zip_code })
         .then(([data]) => {
             req.body.id = data.insertId;
             next();

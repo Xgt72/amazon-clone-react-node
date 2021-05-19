@@ -1,12 +1,17 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Home from './components/Home';
-import Checkout from './components/Checkout';
-import Login from './components/Login';
-import Payment from './components/Payment';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Home from "./components/Home";
+import Checkout from "./components/Checkout";
+import Login from "./components/Login";
+import Orders from "./components/Orders";
+import Payment from "./components/Payment";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
-import './App.css';
+import "./App.css";
+
+const promise = loadStripe("pk_test_51IrmDbJ3PcttZ6W83mEd6LwNex0qPkuQnPQRg6gM131hGFTOIYpkB6dQsQORiXqqPhEIKAE9363iQr6U8qn6sYBO00Ev5i1swP");
 
 function App() {
   return (
@@ -19,9 +24,15 @@ function App() {
         <Route path="/login">
           <Login />
         </Route>
+        <Route path="/orders">
+          <Header />
+          <Orders />
+        </Route>
         <Route path="/payment">
           <Header />
-          <Payment />
+          <Elements stripe={promise}>
+            <Payment />
+          </Elements>
         </Route>
         <Route path="/">
           <Header />
