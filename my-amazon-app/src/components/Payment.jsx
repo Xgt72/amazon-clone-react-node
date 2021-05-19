@@ -5,12 +5,13 @@ import CheckoutProduct from "./CheckoutProduct";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "../reducer";
+import axios from "../axios";
 
 import "./Payment.css";
 
 function Payment() {
-  const history = useHistory();
   const [{ basket, user }, dispatch] = useStateValue();
+  const history = useHistory();
 
   const stripe = useStripe();
   const elements = useElements();
@@ -28,19 +29,23 @@ function Payment() {
       const response = await axios({
         method: "POST",
         // Stripe expects the total in a currencies submits
-        url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
+        url: `/payments?total=${getBasketTotal(basket) * 100}`,
       });
       setClientSecret(response.data.clientSecret);
     };
 
-    getClientSecret();
+    if (basket.length > 0) {
+      getClientSecret();
+    }
   }, [basket]);
+
+  // console.log("THE SECRET IS >>> ", clientSecret);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
 
-    const payload = await stripe
+    stripe
       .confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
@@ -52,12 +57,15 @@ function Payment() {
         setError(null);
         setProcessing(false);
 
+        dispatch({
+          type: "EMPTY_BASKET",
+        });
+
         history.replace("/orders");
       });
   };
 
   const handleChange = (e) => {
-    // console.log(e);
     setDisabled(e.empty);
     setError(e.error ? e.error.message : "");
   };

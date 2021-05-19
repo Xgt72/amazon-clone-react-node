@@ -8,9 +8,9 @@ const errorController = require("./controllers/error");
 const app = express();
 
 const corsOptions = {
-    origin: CLIENT_URL,
-    optionsSuccessStatus: 200,
-    methods: "GET, POST, PUT, DELETE, OPTIONS",
+  origin: CLIENT_URL,
+  optionsSuccessStatus: 200,
+  methods: "GET, POST, PUT, DELETE, OPTIONS",
 };
 
 app.use(cors(corsOptions));
@@ -24,5 +24,5 @@ app.use(errorController.get404);
 app.use(errorController.get500);
 
 app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+  console.log(`Server is listening on port ${PORT}`);
 });
