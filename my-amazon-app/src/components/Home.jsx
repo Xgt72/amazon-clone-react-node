@@ -1,9 +1,113 @@
-import React from 'react';
-import Product from './Product';
+import React, { useEffect, useState } from "react";
+import Product from "./Product";
 
-import './Home.css';
+import "./Home.css";
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Home() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_URL}/products`)
+      .then((res) => {
+        if (res.status !== 200) {
+          throw new Error("Error to get the products");
+        } else {
+          return res.json();
+        }
+      })
+      .then((allProducts) => {
+        setProducts(allProducts);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  }, []);
+
+  const createProductsRows = () => {
+    const rows = [];
+    let rowNumber = 0;
+    for (let i = 0; i < products.length; i++) {
+      if (rowNumber === 0) {
+        rows.push(
+          <div className="home__row" key={`home_row_${i}`}>
+            <Product
+              key={`product_${products[i].id}`}
+              id={products[i].id}
+              title={products[i].title}
+              image={products[i].image}
+              price={products[i].price}
+              rating={products[i].rating}
+            />
+            {products[i + 1] ? (
+              <Product
+                key={`product_${products[i + 1].id}`}
+                id={products[i + 1].id}
+                title={products[i + 1].title}
+                image={products[i + 1].image}
+                price={products[i + 1].price}
+                rating={products[i + 1].rating}
+              />
+            ) : null}
+          </div>,
+        );
+        rowNumber++;
+        i++;
+      } else if (rowNumber === 1) {
+        rows.push(
+          <div className="home__row" key={`home_row_${i}`}>
+            <Product
+              key={`product_${products[i].id}`}
+              id={products[i].id}
+              title={products[i].title}
+              image={products[i].image}
+              price={products[i].price}
+              rating={products[i].rating}
+            />
+            {products[i + 1] ? (
+              <Product
+                key={`product_${products[i + 1].id}`}
+                id={products[i + 1].id}
+                title={products[i + 1].title}
+                image={products[i + 1].image}
+                price={products[i + 1].price}
+                rating={products[i + 1].rating}
+              />
+            ) : null}
+            {products[i + 2] ? (
+              <Product
+                key={`product_${products[i + 2].id}`}
+                id={products[i + 2].id}
+                title={products[i + 2].title}
+                image={products[i + 2].image}
+                price={products[i + 2].price}
+                rating={products[i + 2].rating}
+              />
+            ) : null}
+          </div>,
+        );
+        rowNumber++;
+        i += 2;
+      } else if (rowNumber === 2) {
+        rows.push(
+          <div className="home__row" key={`home_row_${i}`}>
+            <Product
+              key={`product_${products[i].id}`}
+              id={products[i].id}
+              title={products[i].title}
+              image={products[i].image}
+              price={products[i].price}
+              rating={products[i].rating}
+            />
+          </div>,
+        );
+        rowNumber = 0;
+      }
+    }
+    return rows;
+  };
+
   return (
     <main className="home">
       <div className="home__container">
@@ -12,60 +116,7 @@ function Home() {
           src="https://images-eu.ssl-images-amazon.com/images/G/02/digital/video/merch2016/Hero/Covid19/Generic/GWBleedingHero_ENG_COVIDUPDATE__XSite_1500x600_PV_en-GB._CB428684220_.jpg"
           alt="banner prime video"
         />
-        <div className="home__row">
-          <Product
-            key={`product_345`}
-            id={345}
-            title="The Lean Startup: How Constant Innovation Creates Radically Successfull Buisinesses Paperback"
-            image="https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL.__AC_SY400__.jpg"
-            price={19.99}
-            rating={3}
-          />
-          <Product
-            key={`product_3467`}
-            id={3467}
-            title="Kenwood kMix Stand Mixer for Baking, Stylish Kitchen Mixer with K-beater, Dough Hook and Whisk, 5 Litre Glass Bowl"
-            image="https://images-na.ssl-images-amazon.com/images/I/514RLGf4c%2BL._AC_SX679_.jpg"
-            price={239.0}
-            rating={4}
-          />
-        </div>
-        <div className="home__row">
-          <Product
-            key={`product_3475`}
-            id={3475}
-            title="Nintendo Switch avec paire de Joy-Con Rouge N&eacute;on et Bleu N&eacute;on"
-            image="https://images-na.ssl-images-amazon.com/images/I/71r5EDssKdL._AC_SX679_.jpg"
-            price={329.99}
-            rating={5}
-          />
-          <Product
-            key={`product_45`}
-            id={45}
-            title="6 Pin PCI-e 1X to 16X Carte d'adaptateur de Riser Amplifi&eacute;e &amp"
-            image="https://images-na.ssl-images-amazon.com/images/I/81A0nbQZyuL._AC_SX679_.jpg"
-            price={29.99}
-            rating={4}
-          />
-          <Product
-            key={`product_2345`}
-            id={2345}
-            title="Regarder Pour des hommes - Skagen SKT5200"
-            image="https://images-na.ssl-images-amazon.com/images/I/61hyvKdIClL._AC_UX522_.jpg"
-            price={254.64}
-            rating={5}
-          />
-        </div>
-        <div className="home__row">
-          <Product
-            key={`product_5678`}
-            id={5678}
-            title='Dell S2721D &Eacute;cran de PC 27" Quad HD IPS 75 Hz AMD FreeSync, Argent'
-            image="https://images-na.ssl-images-amazon.com/images/I/819hVHPVu-L._AC_SX679_.jpg"
-            price={249.99}
-            rating={4}
-          />
-        </div>
+        {products.length > 0 && createProductsRows()}
       </div>
     </main>
   );

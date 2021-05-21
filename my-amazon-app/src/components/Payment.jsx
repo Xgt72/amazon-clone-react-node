@@ -53,6 +53,7 @@ function Payment() {
       })
       .then(({ paymentIntent }) => {
         // paymentIntent = payment confirmation
+
         setSucceeded(true);
         setError(null);
         setProcessing(false);
