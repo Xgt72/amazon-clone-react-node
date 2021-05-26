@@ -1,11 +1,11 @@
-import React, { forwardRef } from 'react';
-import StarIcon from '@material-ui/icons/Star';
-import StarOutlineIcon from '@material-ui/icons/StarOutline';
+import React, { forwardRef } from "react";
+import StarIcon from "@material-ui/icons/Star";
+import StarOutlineIcon from "@material-ui/icons/StarOutline";
 
-import './CheckoutProduct.css';
-import { useStateValue } from '../StateProvider';
+import "./CheckoutProduct.css";
+import { useStateValue } from "../StateProvider";
 
-const CheckoutProduct = forwardRef(({ id, title, image, price, rating }, ref) => {
+const CheckoutProduct = forwardRef(({ id, title, image, price, rating, quantity }, ref) => {
   const [_, dispatch] = useStateValue();
 
   const getRatingWithStars = () => {
@@ -21,8 +21,21 @@ const CheckoutProduct = forwardRef(({ id, title, image, price, rating }, ref) =>
 
   const removeFromBasket = () => {
     dispatch({
-      type: 'REMOVE_FROM_BASKET',
+      type: "REMOVE_FROM_BASKET",
       id,
+    });
+  };
+
+  const addToBasket = () => {
+    dispatch({
+      type: "ADD_TO_BASKET",
+      item: {
+        id,
+        title,
+        image,
+        price,
+        rating,
+      },
     });
   };
 
@@ -33,11 +46,15 @@ const CheckoutProduct = forwardRef(({ id, title, image, price, rating }, ref) =>
         <p className="checkoutProduct__title">{title}</p>
         <p className="checkoutProduct__price">
           <small>€</small>
-          <strong>{price}</strong>
+          <strong>{parseFloat(price, 10)}</strong>
         </p>
         <div className="checkoutProduct__rating">{getRatingWithStars()}</div>
-        <button type="buton" onClick={removeFromBasket}>
-          Remove from Basket
+        <p>Qty: {quantity}</p>
+        <button type="button" onClick={removeFromBasket}>
+          Remove one from Basket
+        </button>
+        <button type="button" onClick={addToBasket}>
+          Add one to Basket
         </button>
       </div>
     </div>

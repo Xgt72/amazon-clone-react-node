@@ -24,7 +24,7 @@ const createMultipleBaskets = async (req, res, next) => {
 
   Basket.createMultiple(baskets)
     .then(([data]) => {
-      console.log("post baskets: ", data);
+      // console.log("post baskets: ", data);
       req.body.id = data.insertId;
       next();
     })

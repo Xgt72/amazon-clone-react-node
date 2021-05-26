@@ -29,7 +29,7 @@ function Payment() {
       const response = await axios({
         method: "POST",
         // Stripe expects the total in a currencies submits
-        url: `/payments?total=${getBasketTotal(basket) * 100}`,
+        url: `/payments?total=${Math.floor(getBasketTotal(basket) * 100)}`,
       });
       setClientSecret(response.data.clientSecret);
     };
@@ -51,18 +51,53 @@ function Payment() {
           card: elements.getElement(CardElement),
         },
       })
-      .then(({ paymentIntent }) => {
+      .then(async ({ paymentIntent }) => {
         // paymentIntent = payment confirmation
+        let createdTimestamp = new Date();
+        const offsetTimeZone = createdTimestamp.getTimezoneOffset();
+        createdTimestamp.setMinutes(createdTimestamp.getMinutes() + -1 * offsetTimeZone);
+        createdTimestamp = createdTimestamp.toISOString().slice(0, 19).replace("T", " ");
 
-        setSucceeded(true);
-        setError(null);
-        setProcessing(false);
-
-        dispatch({
-          type: "EMPTY_BASKET",
+        let response = await axios({
+          method: "POST",
+          // Stripe expects the total in a currencies submits
+          url: `/users/${user.id}/orders`,
+          data: {
+            paymentIntentId: paymentIntent.id,
+            amount: parseFloat((paymentIntent.amount / 100).toFixed(2)),
+            created: createdTimestamp,
+          },
         });
 
-        history.replace("/orders");
+        console.log("order: ", response);
+        const orderId = response.data.id;
+        const basketToSave = basket.map((item) => ({
+          productId: item.id,
+          quantity: item.quantity,
+        }));
+        response = await axios({
+          method: "POST",
+          // Stripe expects the total in a currencies submits
+          url: `/users/${user.id}/orders/${orderId}/baskets`,
+          data: {
+            baskets: basketToSave,
+          },
+        });
+        if (response.status === 200) {
+          setSucceeded(true);
+          setError(null);
+          setProcessing(false);
+
+          dispatch({
+            type: "EMPTY_BASKET",
+          });
+
+          history.replace("/orders");
+        } else {
+          setDisabled(true);
+          setError("Error to save order");
+          setProcessing(false);
+        }
       });
   };
 

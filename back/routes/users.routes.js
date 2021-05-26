@@ -1,4 +1,5 @@
 const usersRouter = require("express").Router();
+
 const {
   getAllUsers,
   getOneUserById,
@@ -8,7 +9,18 @@ const {
   deleteOneUser,
   passwordIsValid,
 } = require("../controllers/users");
-const { getAllOrdersByUserId } = require("../controllers/orders");
+
+const {
+  getAllOrdersByUserId,
+  createOneOrder,
+  getOneOrderById,
+} = require("../controllers/orders");
+
+const {
+  getAllBasketsByOrderId,
+  createMultipleBaskets,
+} = require("../controllers/baskets");
+
 const {
   createToken,
   authenticateWithJsonWebToken,
@@ -24,6 +36,13 @@ usersRouter.put(
   getOneUserById
 );
 usersRouter.delete("/:id", authenticateWithJsonWebToken, deleteOneUser);
+
 usersRouter.get("/:id/orders", getAllOrdersByUserId);
+usersRouter.post("/:id/orders", createOneOrder, getOneOrderById);
+usersRouter.post(
+  "/:id/orders/:orderId/baskets",
+  createMultipleBaskets,
+  getAllBasketsByOrderId
+);
 
 module.exports = usersRouter;
