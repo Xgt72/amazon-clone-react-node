@@ -12,7 +12,7 @@ productsRouter.get("/", getAllProducts);
 
 productsRouter.post(
   "/",
-  // authenticateWithJsonWebToken,
+  authenticateWithJsonWebToken,
   createOneProduct,
   getOneProductById
 );

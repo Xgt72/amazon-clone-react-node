@@ -15,20 +15,20 @@
 }
 
 .checkoutProduct__title {
-    font-size: 17px;
-    font-weight: 800;
+  font-size: 17px;
+  font-weight: 800;
 }
 
 .checkoutProduct__rating {
-    color: #cd9042;
-    display: flex;
+  color: #cd9042;
+  display: flex;
 }
 
-
-.checkoutProduct__info > button {
+.checkoutProduct__info>button {
   background-color: #f0c14b;
   border: 1px solid;
   border-color: #a88734 #9c7e31 #846a29;
   color: #111;
+  margin-right: 10px;
   margin-top: 10px;
 }

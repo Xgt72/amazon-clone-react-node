@@ -1,8 +1,11 @@
-const Product = require("../models/product");
+const Product = require("../models/Product");
 
 const getAllProducts = async (req, res, next) => {
   Product.fetchAll()
     .then(([allProducts]) => {
+      allProducts.forEach((product) => {
+        product.price = parseFloat(product.price, 10);
+      });
       res.json(allProducts);
     })
     .catch((err) => {
@@ -31,6 +34,7 @@ const getOneProductById = async (req, res, next) => {
         } else if (req.params.id) {
           res.status(200);
         }
+        product.price = parseFloat(product.price, 10);
         res.json(product[0]);
       }
     })
