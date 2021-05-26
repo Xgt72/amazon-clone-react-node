@@ -1,18 +1,19 @@
-import React from 'react';
-import { useStateValue } from '../StateProvider';
-import { Link } from 'react-router-dom';
-import SearchIcon from '@material-ui/icons/Search';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import React from "react";
+import { useStateValue } from "../StateProvider";
+import { Link } from "react-router-dom";
+import SearchIcon from "@material-ui/icons/Search";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import { getBasketProductQuantity } from "../reducer";
 
-import './Header.css';
+import "./Header.css";
 
 function Header() {
   const [{ basket, user }, dispatch] = useStateValue();
 
   const handleAuthentication = (e) => {
-    if ((user && e.key === 'Enter') || user) {
-      localStorage.removeItem('AMAZON_TOKEN');
-      dispatch({ type: 'RESET_USER' });
+    if ((user && e.key === "Enter") || user) {
+      localStorage.removeItem("AMAZON_TOKEN");
+      dispatch({ type: "RESET_USER" });
     }
   };
 
@@ -26,15 +27,15 @@ function Header() {
         <SearchIcon className="header__searchIcon" />
       </div>
       <div className="header__nav flex_row_justify_evenly">
-        <Link to={!user ? '/login' : ''}>
+        <Link to={!user ? "/login" : ""}>
           <div
             className="header__option flex_col"
             onClick={handleAuthentication}
             onKeyPress={(e) => handleAuthentication(e)}
             role="button"
             tabIndex="0">
-            <span className="header__optionLineOne">Hello {user ? user.firstname : 'Guest'}</span>
-            <span className="header__optionLineTwo">{user ? 'Sign Out' : 'Sign In'}</span>
+            <span className="header__optionLineOne">Hello {user ? user.firstname : "Guest"}</span>
+            <span className="header__optionLineTwo">{user ? "Sign Out" : "Sign In"}</span>
           </div>
         </Link>
         <div className="header__option flex_col">
@@ -48,7 +49,7 @@ function Header() {
         <Link to="/checkout">
           <div className="header__optionBasket flex_row_align_center">
             <ShoppingBasketIcon />
-            <span className="header__optionLineTwo header__basketCount">{basket.length}</span>
+            <span className="header__optionLineTwo header__basketCount">{getBasketProductQuantity(basket)}</span>
           </div>
         </Link>
       </div>

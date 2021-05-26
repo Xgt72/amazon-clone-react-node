@@ -3,6 +3,9 @@ const Order = require("../models/Order");
 const getAllOrders = async (req, res, next) => {
   Order.fetchAll()
     .then(([allOrders]) => {
+      allOrders.forEach((order) => {
+        order.amount = parseFloat(order.anmount, 10);
+      });
       res.json(allOrders);
     })
     .catch((err) => {
@@ -30,6 +33,7 @@ const getOneOrderById = async (req, res, next) => {
         } else if (req.params.id) {
           res.status(200);
         }
+        order.amount = parseFloat(order.anmount, 10);
         res.json(order[0]);
       }
     })
@@ -49,7 +53,10 @@ const getAllOrdersByUserId = async (req, res, next) => {
       if (!orders.length) {
         res.status(404).json({ errorMessage: "Orders not found" });
       } else {
-        resstatus(200).json(orders);
+        orders.forEach((order) => {
+          order.amount = parseFloat(order.amount, 10);
+        });
+        res.status(200).json(orders);
       }
     })
     .catch((err) => {
@@ -61,9 +68,10 @@ const getAllOrdersByUserId = async (req, res, next) => {
 };
 
 const createOneOrder = async (req, res, next) => {
-  const { userId, paymentIntentId, amount } = req.body;
+  const { paymentIntentId, amount, created } = req.body;
+  const { id } = req.params;
 
-  Order.createOne({ userId, paymentIntentId, amount, created: new Date() })
+  Order.createOne({ userId: id, paymentIntentId, amount, created })
     .then(([data]) => {
       req.body.id = data.insertId;
       next();

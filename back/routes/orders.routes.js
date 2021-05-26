@@ -17,12 +17,12 @@ ordersRouter.get("/", getAllOrders);
 
 ordersRouter.get("/:id", getOneOrderById);
 
-ordersRouter.post(
-  "/",
-  //   authenticateWithJsonWebToken,
-  createOneOrder,
-  getOneOrderById
-);
+// ordersRouter.post(
+//   "/",
+//   //   authenticateWithJsonWebToken,
+//   createOneOrder,
+//   getOneOrderById
+// );
 
 ordersRouter.put(
   "/:id",
