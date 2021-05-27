@@ -18,9 +18,25 @@ class Order {
     return connection.promise().query(sql, [id]);
   }
 
-  static fetchAllByUserId(userId) {
-    const sql = "SELECT * FROM orders WHERE userId = ?";
-    return connection.promise().query(sql, [userId]);
+  static fetchAllByUserId(userId, orderBy, flow) {
+    let sql = "SELECT * FROM orders WHERE userId = ?";
+    const sqlValues = [userId];
+    if (orderBy === "created") {
+      sql += " ORDER BY created";
+      if (flow === "DESC") {
+        sql += " DESC";
+      }
+    }
+    console.log(sql, sqlValues);
+
+    return connection.promise().query(sql, sqlValues);
+  }
+
+  static fetchAllWithBasketsByUserId(userId) {
+    const sql =
+      "SELECT o.id, o.paymentIntentId, o.amount, o.created, b.productId, b.quantity, p.title, p.price, p.image, p.rating FROM orders o JOIN baskets b ON b.orderId=o.id JOIN products p ON p.id=b.productId WHERE userId=? ORDER BY o.created DESC";
+    const sqlValues = [userId];
+    return connection.promise().query(sql, sqlValues);
   }
 
   static createOne(orderData) {

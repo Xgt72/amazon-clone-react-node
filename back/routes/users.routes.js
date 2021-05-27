@@ -19,6 +19,7 @@ const {
 const {
   getAllBasketsByOrderId,
   createMultipleBaskets,
+  getAllOrdersAndBasketsByUserId,
 } = require("../controllers/baskets");
 
 const {
@@ -44,5 +45,7 @@ usersRouter.post(
   createMultipleBaskets,
   getAllBasketsByOrderId
 );
+
+usersRouter.get("/:id/orders/baskets", getAllOrdersAndBasketsByUserId);
 
 module.exports = usersRouter;
