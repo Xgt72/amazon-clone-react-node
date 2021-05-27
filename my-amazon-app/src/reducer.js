@@ -8,7 +8,7 @@ export const getBasketTotal = (basket) => Math.round(basket?.reduce((total, item
 export const getBasketProductQuantity = (basket) => basket?.reduce((total, item) => total + item.quantity, 0);
 
 const reducer = (state, action) => {
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     case "ADD_TO_BASKET": {
       const updatedBasket = [...state.basket];

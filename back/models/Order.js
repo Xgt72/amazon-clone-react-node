@@ -27,7 +27,6 @@ class Order {
         sql += " DESC";
       }
     }
-    console.log(sql, sqlValues);
 
     return connection.promise().query(sql, sqlValues);
   }
