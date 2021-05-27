@@ -69,7 +69,6 @@ function Payment() {
           },
         });
 
-        console.log("order: ", response);
         const orderId = response.data.id;
         const basketToSave = basket.map((item) => ({
           productId: item.id,

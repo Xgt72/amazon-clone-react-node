@@ -48,14 +48,12 @@ const getOneOrderById = async (req, res, next) => {
 const getAllOrdersByUserId = async (req, res, next) => {
   const { id } = req.params;
   const { orderBy, flow } = req.query;
-  console.log(req.query);
 
   Order.fetchAllByUserId(id, orderBy, flow)
     .then(([orders]) => {
       if (!orders.length) {
         res.status(404).json({ errorMessage: "Orders not found" });
       } else {
-        console.log(orders);
         orders.forEach((order) => {
           order.amount = parseFloat(order.amount, 10);
         });
