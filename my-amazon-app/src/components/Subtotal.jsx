@@ -1,13 +1,13 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useStateValue } from '../StateProvider';
-import CurrencyFormat from 'react-currency-format';
-import { getBasketTotal } from '../reducer';
-import './Subtotal.css';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useStateValue } from "../StateProvider";
+import CurrencyFormat from "react-currency-format";
+import { getBasketTotal } from "../reducer";
+import "./Subtotal.css";
 
 function Subtotal() {
   const history = useHistory();
-  const [{ basket }] = useStateValue();
+  const [{ basket, user }] = useStateValue();
 
   return (
     <div className="flex_col_justify_between subtotal">
@@ -24,11 +24,13 @@ function Subtotal() {
         )}
         decimalScale={2}
         value={getBasketTotal(basket)}
-        displayType={'text'}
+        displayType={"text"}
         thousandSeparator={true}
-        prefix={'€'}
+        prefix={"€"}
       />
-      <button type="button" onClick={() => history.push("/payment")}>Proceed to Checkout</button>
+      <button type="button" onClick={() => history.push(!user ? "/login" : "/payment")}>
+        Proceed to Checkout
+      </button>
     </div>
   );
 }

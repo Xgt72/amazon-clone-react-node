@@ -5,7 +5,7 @@ import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import "./CheckoutProduct.css";
 import { useStateValue } from "../StateProvider";
 
-const CheckoutProduct = forwardRef(({ id, title, image, price, rating, quantity }, ref) => {
+const CheckoutProduct = forwardRef(({ id, title, image, price, rating, quantity, hideButton }, ref) => {
   const [_, dispatch] = useStateValue();
 
   const getRatingWithStars = () => {
@@ -50,12 +50,16 @@ const CheckoutProduct = forwardRef(({ id, title, image, price, rating, quantity 
         </p>
         <div className="checkoutProduct__rating">{getRatingWithStars()}</div>
         <p>Qty: {quantity}</p>
-        <button type="button" onClick={removeFromBasket}>
-          Remove one from Basket
-        </button>
-        <button type="button" onClick={addToBasket}>
-          Add one to Basket
-        </button>
+        {!hideButton && (
+          <>
+            <button type="button" onClick={removeFromBasket}>
+              Remove one from Basket
+            </button>
+            <button type="button" onClick={addToBasket}>
+              Add one to Basket
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
