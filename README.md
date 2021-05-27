@@ -1,1 +1,1 @@
-# Amazon Clone with React and NodeJS
+# Amazon Clone with React, NodeJS and MySQL
