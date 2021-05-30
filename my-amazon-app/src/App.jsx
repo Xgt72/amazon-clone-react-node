@@ -11,7 +11,7 @@ import { Elements } from "@stripe/react-stripe-js";
 
 import "./App.css";
 
-const promise = loadStripe("pk_test_51IrmDbJ3PcttZ6W83mEd6LwNex0qPkuQnPQRg6gM131hGFTOIYpkB6dQsQORiXqqPhEIKAE9363iQr6U8qn6sYBO00Ev5i1swP");
+const promise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 function App() {
   return (
